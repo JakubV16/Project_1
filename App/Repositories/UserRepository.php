@@ -81,7 +81,7 @@ class UserRepository
             return false;
         }
     }
-/*
+    /*
     public function delete(int $id) :bool 
     {
         try{
@@ -95,8 +95,7 @@ class UserRepository
         catch(PDOExpection $e){
             return false;
         }
-    }
+    }*/
 }
 
 
-*/
