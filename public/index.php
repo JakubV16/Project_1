@@ -1,13 +1,13 @@
 <?php
+session_start(); 
+// zapnem session
 
 require_once __DIR__. "/../vendor/autoload.php"; 
 // načítam všetky triedy z App/ cez composer autoload
 
-session_start(); 
-// zapnem session
-
 use App\Core\Database;
 use App\Repositories\UserRepository;
+use App\Models\User;
 // poviem PHP, ktoré triedy idem používať
 
 $db = new Database();
@@ -21,3 +21,4 @@ var_dump($pdo);
 
 $userRepo = new UserRepository($pdo);
 // vytvorím repository a dám mu PDO, aby vedel robiť SQL dotazy
+
