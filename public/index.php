@@ -21,4 +21,19 @@ var_dump($pdo);
 
 $userRepo = new UserRepository($pdo);
 // vytvorím repository a dám mu PDO, aby vedel robiť SQL dotazy
+/*
+$user = $userRepo -> findByUsername("Majo");
+var_dump($user);
+*/
+
+$user = new User("Fero","Fero","user", false);
+$userRepo->save($user);
+
+
+if($user = $userRepo->findByUsername("Fero")){
+    $user->setUsername("Rudo");
+    $userRepo->update($user);
+
+}
+
 
