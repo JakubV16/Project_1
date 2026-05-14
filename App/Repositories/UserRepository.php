@@ -2,7 +2,7 @@
 namespace App\Repositories;
 
 use PDO;
-use PDOexpection;
+use PDOException;
 use App\Models\User;
 
 class UserRepository
@@ -35,7 +35,7 @@ class UserRepository
 
             return null;
         }
-        catch(PDOExpextion $e){
+        catch(PDOException $e){
             return null;
         }
 
@@ -59,7 +59,7 @@ class UserRepository
             }
             return $result;
         }
-        catch(PDOExpection $e){
+        catch(PDOException $e){
             return false;
         }
     }
@@ -69,33 +69,56 @@ class UserRepository
         try{
             $sql="UPDATE users SET username = :username, password=:password, role=:role WHERE id=:id";
             $stmt = $this->db->prepare($sql);
-            return $result = $stmt->execute([
+            $result = $stmt->execute([
                 ":username"=>$user->getUsername(),
                 ":password"=>$user->getPassword(),
                 ":role"=>$user->getRole(),
                 ":id"=>$user->getId()
             ]);
-  
+            return $result;
         }
-        catch(PDOExpection $e){
+        catch(PDOException $e){
+            echo $e->getMessage();
             return false;
         }
     }
-    /*
+    
     public function delete(int $id) :bool 
     {
         try{
             $sql="DELETE FROM users WHERE id = :id";
             $stmt = $this->db->prepare($sql);
             $result = $stmt->execute([":id"=> $id]);
-
+            return true;
             
 
         }
-        catch(PDOExpection $e){
+        catch(PDOException $e){
+            echo $e->getMessage();
             return false;
         }
-    }*/
+    }
+
+    public function findAll(): array
+    {
+        try {
+            $sql = "SELECT * FROM users";
+            $stmt = $this->db->query($sql);
+            $users = [];
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $user = new User($row["username"], $row["password"], $row["role"], true);
+                $user->setId((int)$row["id"]);
+                $user->setCreatedAt($row["created_at"]);
+                $users[] = $user;
+            }
+            return $users;
+
+            
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
 }
 
 
