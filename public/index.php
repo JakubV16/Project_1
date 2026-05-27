@@ -16,12 +16,8 @@ $db = new Database();
 $pdo = $db->getConnection();
 // pripojím sa k databáze a dostanem PDO objekt
 
-var_dump($pdo);
-// skontrolujem, či pripojenie funguje
-
 $userRepo = new UserRepository($pdo);
 // vytvorím repository a dám mu PDO, aby vedel robiť SQL dotazy
-
 
 
 $users= $userRepo->findAll();

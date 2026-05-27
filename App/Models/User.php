@@ -61,6 +61,15 @@ public function setUsername(string $username ) :void
 {
     $this->username = $username;
 }
+public function setPassword(string $password, bool $isAlreadyHashed = false): void
+{
+    if ($isAlreadyHashed) {
+        $this->password = $password;
+    } else {
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
+    }
+}
+
 
 
 
