@@ -8,6 +8,8 @@ require_once __DIR__. "/../vendor/autoload.php";
 use App\Core\Database;
 use App\Repositories\UserRepository;
 use App\Models\User;
+use App\Core\Router;
+use App\Controllers\UserController;
 // poviem PHP, ktoré triedy idem používať
 
 $db = new Database();
@@ -19,9 +21,15 @@ $pdo = $db->getConnection();
 $userRepo = new UserRepository($pdo);
 // vytvorím repository a dám mu PDO, aby vedel robiť SQL dotazy
 
-
-$users= $userRepo->findAll();
-
+$userController = new UserController($userRepo);
 
 
-include __DIR__. "/../views/Home.php";
+$router = new Router();
+
+$router->add("/",$userController, "index");
+
+$router->add("/login",$userController, "login");
+
+$router->add("/register",$userController, "register");
+
+$router->resolve();
