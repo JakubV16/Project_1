@@ -32,4 +32,8 @@ $router->add("/login",$userController, "login");
 
 $router->add("/register",$userController, "register");
 
+$router->add("/dashboard",$userController, "login");
+
+$router->add("/logout",$userController, "logout");
+
 $router->resolve();
